@@ -14,7 +14,10 @@ url = 'https://github.com/jpadilla/django-rest-framework-oauth'
 author = 'José Padilla'
 author_email = 'hello@jpadilla.com'
 license = 'BSD'
-install_requires = open('requirements.txt').read().split('\n')
+install_requires = [
+    line for line in open('requirements.txt').read().split('\n')
+    if not line.startswith("-e") and not line.startswith("#")
+]
 
 
 # This command has been borrowed from
