@@ -1,5 +1,7 @@
 # REST Framework OAuth
 
+# THIS FORK IS DEPRECATED. Please use the [upstream version](https://github.com/jpadilla/django-rest-framework-oauth) of the package.
+
 [![build-status-image]][travis]
 [![pypi-version]][pypi]
 
