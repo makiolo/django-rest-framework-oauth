@@ -5,6 +5,8 @@
 [![build-status-image]][travis]
 [![pypi-version]][pypi]
 
+# THIS IS AN EDX FORK of the [upstream version](https://github.com/jpadilla/django-rest-framework-oauth) of the package, which was forked to support Django 1.11.
+
 **OAuth support for Django REST Framework**
 
 Full documentation for the project is available at [http://jpadilla.github.io/django-rest-framework-oauth][docs].
@@ -18,8 +20,8 @@ This package provides two authentication classes: [OAuthAuthentication][oauth-au
 ## Requirements
 
 * Python 2.7
-* Django (1.6, 1.7)
-* Django REST Framework (2.4.3, 2.4.4, 3.0-beta)
+* Django (1.8, 1.10, 1.11)
+* Django REST Framework (2.4.4, 3.6.3)
 
 ## Installation
 

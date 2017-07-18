@@ -1,12 +1,12 @@
 from __future__ import unicode_literals
 import time
 import datetime
+import unittest
 
-from django.conf.urls import patterns, url, include
+from django.conf.urls import url, include
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.test import TestCase
-from django.utils import unittest
 from django.utils.http import urlencode
 
 from rest_framework import status
@@ -39,10 +39,9 @@ class OAuth2AuthenticationDebug(OAuth2Authentication):
     allow_query_params_token = True
 
 
-urlpatterns = patterns(
-    '',
-    (r'^oauth/$', MockView.as_view(authentication_classes=[OAuthAuthentication])),
-    (
+urlpatterns = [
+    url(r'^oauth/$', MockView.as_view(authentication_classes=[OAuthAuthentication])),
+    url(
         r'^oauth-with-scope/$',
         MockView.as_view(
             authentication_classes=[OAuthAuthentication],
@@ -60,12 +59,11 @@ urlpatterns = patterns(
             permission_classes=[permissions.TokenHasReadWriteScope]
         )
     ),
-)
+]
 
 
 class OAuthTests(TestCase):
     """OAuth 1.0a authentication"""
-    urls = 'tests.test_authentication'
 
     def setUp(self):
         # these imports are here because oauth is optional and hiding them in try..except block or compat
@@ -299,7 +297,6 @@ class OAuthTests(TestCase):
 
 class OAuth2Tests(TestCase):
     """OAuth 2.0 authentication"""
-    urls = 'tests.test_authentication'
 
     def setUp(self):
         self.csrf_client = APIClient(enforce_csrf_checks=True)
