@@ -91,7 +91,6 @@ setup(
     packages=get_packages(package),
     package_data=get_package_data(package),
     cmdclass={'test': PyTest},
-    install_requires=install_requires,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',

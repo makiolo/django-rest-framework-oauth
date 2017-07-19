@@ -1,6 +1,2 @@
-django-oauth-plus>=2.2.1
-oauth2>=1.5.211
-
-# Point to EdX's fork of django-oauth2-provider.  If we install the upstream version of this library,
-# the upstream version can shadow our fork.
--e git+https://github.com/edx/django-oauth2-provider.git@0.2.7-fork-edx-5#egg=django-oauth2-provider
+Django>=1.8,<2
+djangorestframework>=2.4.4
