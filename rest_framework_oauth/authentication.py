@@ -4,7 +4,6 @@ Provides OAuth authentication policies.
 from __future__ import unicode_literals
 
 from django.core.exceptions import ImproperlyConfigured
-from django.conf import settings
 
 from rest_framework import exceptions
 from rest_framework.authentication import get_authorization_header, BaseAuthentication
@@ -124,7 +123,7 @@ class OAuth2Authentication(BaseAuthentication):
     OAuth 2 authentication backend using `django-oauth2-provider`
     """
     www_authenticate_realm = 'api'
-    allow_query_params_token = settings.DEBUG
+    allow_query_params_token = False
 
     def __init__(self, *args, **kwargs):
         super(OAuth2Authentication, self).__init__(*args, **kwargs)
@@ -164,13 +163,13 @@ class OAuth2Authentication(BaseAuthentication):
         """
         Authenticate the request, given the access token.
         """
-
+        from provider.oauth2.models import AccessToken
         try:
-            token = oauth2_provider.oauth2.models.AccessToken.objects.select_related('user')
+            token_model = AccessToken.objects.select_related('user')
             # provider_now switches to timezone aware datetime when
             # the oauth2_provider version supports to it.
-            token = token.get(token=access_token, expires__gt=provider_now())
-        except oauth2_provider.oauth2.models.AccessToken.DoesNotExist:
+            token = token_model.get(token=access_token.decode('utf-8'), expires__gt=provider_now())
+        except AccessToken.DoesNotExist:
             raise exceptions.AuthenticationFailed('Invalid token')
 
         user = token.user
@@ -179,7 +178,7 @@ class OAuth2Authentication(BaseAuthentication):
             msg = 'User inactive or deleted: %s' % user.get_username()
             raise exceptions.AuthenticationFailed(msg)
 
-        return (user, token)
+        return user, token
 
     def authenticate_header(self, request):
         """
